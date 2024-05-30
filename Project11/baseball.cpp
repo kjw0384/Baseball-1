@@ -18,8 +18,8 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
-		return { false, 2, 0 };
-		return { false, 0, 0 };
+
+		return { false, getStrikeCount(guessNumber), 0};
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
@@ -43,6 +43,16 @@ public:
 		return guessNumber[0] == guessNumber[1] ||
 			guessNumber[0] == guessNumber[2] ||
 			guessNumber[1] == guessNumber[2];
+	}
+
+	int getStrikeCount(const std::string& guessNumber) {
+		int strikeCount = 0;
+		for (int i = 0; i < 3; i++)
+		{
+			if (guessNumber[i] == question[i])
+				strikeCount++;
+		}
+		return strikeCount;
 	}
 
 private:
