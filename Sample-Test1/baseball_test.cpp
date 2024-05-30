@@ -46,3 +46,7 @@ TEST_F(BaseballFixture, Return2Strike0BallResult) {
 TEST_F(BaseballFixture, Return0Strike1BallResult) {
 	guessResultEqual("862", { false, 0, 1 });
 }
+
+TEST_F(BaseballFixture, Return1Strike2BallResult) {
+	guessResultEqual("321", { false, 1, 2 });
+}
