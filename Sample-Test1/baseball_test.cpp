@@ -18,6 +18,15 @@ public:
 			//PASS
 		}
 	}
+
+	void guessResultEqual(const string& guessNumber, GuessResult expected)
+	{
+		GuessResult result = game.guess(guessNumber);
+
+		EXPECT_TRUE(result.solved == expected.solved);
+		EXPECT_EQ(result.strikes, expected.strikes);
+		EXPECT_EQ(result.balls, expected.balls);
+	}
 };
 
 TEST_F(BaseballFixture, ThrowExceptionWhenInvalidCase) {
@@ -27,25 +36,13 @@ TEST_F(BaseballFixture, ThrowExceptionWhenInvalidCase) {
 }
 
 TEST_F(BaseballFixture, ReturnSolvedResultIfMatchedNumber) {
-	GuessResult result = game.guess("123");
-
-	EXPECT_TRUE(result.solved);
-	EXPECT_EQ(3, result.strikes);
-	EXPECT_EQ(0, result.balls);
+	guessResultEqual("123", { true, 3, 0 });
 }
 
 TEST_F(BaseballFixture, Return2Strike0BallResult) {
-	GuessResult result = game.guess("153");
-
-	EXPECT_FALSE(result.solved);
-	EXPECT_EQ(2, result.strikes);
-	EXPECT_EQ(0, result.balls);
+	guessResultEqual("153", { false, 2, 0 });
 }
 
 TEST_F(BaseballFixture, Return0Strike1BallResult) {
-	GuessResult result = game.guess("862");
-
-	EXPECT_FALSE(result.solved);
-	EXPECT_EQ(0, result.strikes);
-	EXPECT_EQ(1, result.balls);
+	guessResultEqual("862", { false, 0, 1 });
 }

@@ -18,9 +18,8 @@ public:
 		if (guessNumber == question) {
 			return { true, 3, 0 };
 		}
-		if (guessNumber == "862")
-			return { false, 0, 1 };
-		return { false, getStrikeCount(guessNumber), 0};
+
+		return { false, getStrikeCount(guessNumber), getBallCount(guessNumber)};
 	}
 
 	void assertIllegalArgument(const std::string& guessNumber)
@@ -48,12 +47,27 @@ public:
 
 	int getStrikeCount(const std::string& guessNumber) {
 		int strikeCount = 0;
-		for (int i = 0; i < 3; i++)
+		for (int numberPosition = 0; numberPosition < 3; numberPosition++)
 		{
-			if (guessNumber[i] == question[i])
+			if (guessNumber[numberPosition] == question[numberPosition])
 				strikeCount++;
 		}
 		return strikeCount;
+	}
+
+	int getBallCount(const std::string& guessNumber) {
+		int ballCount = 0;
+		for (int guessNumberPosition = 0; guessNumberPosition < 3; guessNumberPosition++)
+		{
+			for (int questionNumberPosition = 0; questionNumberPosition < 3; questionNumberPosition++)
+			{
+				if (guessNumberPosition == questionNumberPosition) continue;
+
+				if (guessNumber[guessNumberPosition] == question[questionNumberPosition])
+					ballCount++;
+			}
+		}
+		return ballCount;
 	}
 
 private:
